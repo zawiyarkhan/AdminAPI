@@ -2,9 +2,11 @@ const express = require('express');
 const authControllers = require('../Controllers/authControllers');
 const routeControllers =require('../Controllers/routeControllers');
 const requireAuth = require('../Controllers/middleware/authMiddleware');
-
+const calendarControllers = require('../Controllers/gCallenderController');
 const router = express.Router();
 
+
+// Admin routes
 router.post('/SignUp', authControllers.SignUp)
 router.post('/login', authControllers.Login);
 router.post('/logout', authControllers.Logout);
@@ -16,5 +18,16 @@ router.delete('/DeleteClients',requireAuth, routeControllers.DeleteClients);
 router.delete('/DeleteLawyers',requireAuth, routeControllers.DeleteLawyers);
 router.post('/CreateClients',requireAuth, routeControllers.CreateClients);
 router.post('/CreateLawyers',requireAuth, routeControllers.CreateLawyers);
+
+
+// Google Calender routes
+router.post('/insertEvent', requireAuth, calendarControllers.insertEvent);
+router.get('/getEvents', requireAuth, calendarControllers.getEvents);
+router.delete('/DeleteEvents', requireAuth, calendarControllers.deleteEvent);
+
+
+// Chat routes
+
+
 
 module.exports =  router;
