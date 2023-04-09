@@ -9,7 +9,7 @@ const CalenderID = process.env.CALENDER_ID;
 
 
 const SCOPES = '';
-const calender = google.calendar({version: v3});
+const calender = google.calendar({version: "v3"});
 
 const auth = new google.auth.JWT(
     CREDENTIALS.client_email,
@@ -61,7 +61,7 @@ const insertEvent = async (event) => {
     try {
         let response = await calendar.events.insert({
             auth: auth,
-            calendarId: calendarId,
+            calendarId: CalenderID,
             resource: event
         });
     
@@ -79,9 +79,9 @@ const insertEvent = async (event) => {
 const getEvents = async (dateTimeStart, dateTimeEnd) => {
 
     try {
-        let response = await calendar.events.list({
+        let response = await calender.events.list({
             auth: auth,
-            calendarId: calendarId,
+            calendarId: CalenderID,
             timeMin: dateTimeStart,
             timeMax: dateTimeEnd,
             timeZone: 'Asia/Kolkata'
@@ -115,4 +115,43 @@ const deleteEvent = async (eventId) => {
     }
 };
 
-module.exports = {insertEvent, getEvents, deleteEvent};
+
+const createAPI = (req, res) =>{
+    try {
+        insertEvent(req.body)
+            .then(result => {
+                res.send(result);
+            })
+            .catch(error => {
+                res.send(error)
+            });
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getAPI = ()=>{
+    try {
+        getEvents()
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const deleteAPI = () => {
+    try {
+        deleteEvent(req.body)
+            .then(result => {
+                res.send(result);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+module.exports = {createAPI, getAPI, deleteAPI};
