@@ -18,46 +18,156 @@ const createToken = (id) => {
 
 const SignUp = async (req,res) =>{
 
+    const {email, password, role} = req.body;
     try {
-        if (req.body.role == '2'){
-            var lawyer;
-            // const user = await User.create(req.body);
-            Lawyer.findById()
-                .then(result => {
-                    lawyer = result;
-                })
-            const user = new User({
-                email: req.body.email,
-                password: req.body.password,
-                role: req.body.role,
-                profile: lawyer
-            })
-            const token = createToken(user._id);
-            res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
-            res.json({user: user._id});
-        }
+
         
-        else if(req.body.role == '3'){
-            var client;
-            Client.findById()
-                .then(result => {
-                    lawyer = result;
-                })
-            const user = new User({
-                email: req.body.email,
-                password: req.body.password,
-                role: req.body.role,
-                profile: lawyer
-            })
+
+        if (req.body.role == '2'){
+            const user = await User.create({email, password, role})
             const token = createToken(user._id);
             res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
-            res.json({user: user._id});
+            console.log(token)
+            res.redirect('/updateClient')
         }
+        if (req.body.role == '3'){
+            const user = await User.create({email, password, role})
+            const token = createToken(user._id);
+            res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
+            console.log(token);
+            res.redirect('/updateLawyer')
+        }
+
+        // const token = createToken(user._id);
+        // res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
+        // res.json({user: token});
         
     } catch (error) {
         console.log(error);
     }
 }
+
+// updating the Lawyers/Clients object in the user table
+
+const updateClient = async (req,res) =>{
+    try {
+        const token = req.cookies.jwt;
+        if (token) {
+            jwt.verify(token, 'Sweater Weather', async (err, decodedToken) => {
+                if (err) {
+                    console.log(err.message)
+                }
+                else{
+
+                    const client = new Client(req.body);
+
+                    let user = User.findByIdAndUpdate(decodedToken.id, {profile: client}, {
+                        new: false
+                    })
+                    .then(result => {
+                        res.send(result)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                }
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+const updateLawyer = async (req,res) =>{
+    try {
+        const token = req.cookies.jwt;
+        if (token) {
+            jwt.verify(token, 'Sweater Weather', async (err, decodedToken) => {
+                if (err) {
+                    console.log(err.message)
+                }
+                else{
+
+                    const lawyer = new Lawyer(req.body);
+
+                    let user = User.findByIdAndUpdate(decodedToken.id, {profile: lawyer}, {
+                        new: false
+                    })
+                    .then(result => {
+                        res.send(result)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                }
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+
+
+// const UpdatingInfo = async (req, res) => {
+//     try {
+//         const token = req.cookies.jwt
+//         console.log(token)
+//         if (token) {
+//             console.log("hello")
+//             jwt.verify(token, 'Sweater Weather', async (err, decodedToken) =>{
+//                 if (err) {
+//                     console.log("nothing")
+//                     console.log(err.message)
+//                 }
+//                 else{
+//                     console.log('heyy')
+//                     console.log(decodedToken)
+//                     let user = User.findById(decodedToken.id)
+//                     user.toJson
+//                     console.log(user['schema']['tree'])
+                    
+//                     //console.log(user)
+//                     if (user.role == '2') {
+//                         console.log('nope')
+//                         const lawyer = new Lawyer(req.body)
+//                         User.findByIdAndUpdate(decodedToken,{profile: lawyer},{
+//                             new: false
+//                         })
+//                         .then(result => {
+//                             res.send(result)
+//                         })
+//                         .catch(err => {
+//                             console.log(err)
+//                         })
+//                     }
+//                     if (user.role == '3') {
+//                         const client = new Client(req.body)
+//                         User.findByIdAndUpdate(decodedToken, {profile: client}, {
+//                             new: false
+//                         })
+//                         .then(result => {
+//                             res.send(result)
+//                         })
+//                         .catch(err => {
+//                             console.log(err)
+//                         })
+//                     }
+//                 }
+//             })
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+
 
 // login post
 
@@ -83,4 +193,4 @@ const Logout = (req, res)=>{
     res.send("User logged out");
 }
 
-module.exports = {Login, Logout, SignUp};
+module.exports = {Login, Logout, SignUp, updateClient, updateLawyer};

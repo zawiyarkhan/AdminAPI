@@ -1,118 +1,118 @@
-// Calender API controller guys
+// // Calender API controller guys
 
-const {google} = require('googleapis');
-require ('dotenv').config();
-
-
-const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
-const CalenderID = process.env.CALENDER_ID;
+// const {google} = require('googleapis');
+// require ('dotenv').config();
 
 
-const SCOPES = '';
-const calender = google.calendar({version: v3});
+// const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
+// const CalenderID = process.env.CALENDER_ID;
 
-const auth = new google.auth.JWT(
-    CREDENTIALS.client_email,
-    null,
-    CREDENTIALS.private_key,
-    SCOPES
-);
 
-const TIMEOFFSET = '+5:00';
+// const SCOPES = '';
+// const calender = google.calendar({version: v3});
 
-const dateTimeForCalander = () => {
+// const auth = new google.auth.JWT(
+//     CREDENTIALS.client_email,
+//     null,
+//     CREDENTIALS.private_key,
+//     SCOPES
+// );
 
-    let date = new Date();
+// const TIMEOFFSET = '+5:00';
 
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    if (month < 10) {
-        month = `0${month}`;
-    }
-    let day = date.getDate();
-    if (day < 10) {
-        day = `0${day}`;
-    }
-    let hour = date.getHours();
-    if (hour < 10) {
-        hour = `0${hour}`;
-    }
-    let minute = date.getMinutes();
-    if (minute < 10) {
-        minute = `0${minute}`;
-    }
+// const dateTimeForCalander = () => {
 
-    let newDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000${TIMEOFFSET}`;
+//     let date = new Date();
 
-    let event = new Date(Date.parse(newDateTime));
+//     let year = date.getFullYear();
+//     let month = date.getMonth() + 1;
+//     if (month < 10) {
+//         month = `0${month}`;
+//     }
+//     let day = date.getDate();
+//     if (day < 10) {
+//         day = `0${day}`;
+//     }
+//     let hour = date.getHours();
+//     if (hour < 10) {
+//         hour = `0${hour}`;
+//     }
+//     let minute = date.getMinutes();
+//     if (minute < 10) {
+//         minute = `0${minute}`;
+//     }
 
-    let startDate = event;
-    // Delay in end time is 1
-    let endDate = new Date(new Date(startDate).setHours(startDate.getHours()+1));
+//     let newDateTime = `${year}-${month}-${day}T${hour}:${minute}:00.000${TIMEOFFSET}`;
 
-    return {
-        'start': startDate,
-        'end': endDate
-    }
-};
+//     let event = new Date(Date.parse(newDateTime));
 
-const insertEvent = async (event) => {
+//     let startDate = event;
+//     // Delay in end time is 1
+//     let endDate = new Date(new Date(startDate).setHours(startDate.getHours()+1));
 
-    try {
-        let response = await calendar.events.insert({
-            auth: auth,
-            calendarId: calendarId,
-            resource: event
-        });
+//     return {
+//         'start': startDate,
+//         'end': endDate
+//     }
+// };
+
+// const insertEvent = async (event) => {
+
+//     try {
+//         let response = await calendar.events.insert({
+//             auth: auth,
+//             calendarId: CalenderID,
+//             resource: event
+//         });
     
-        if (response['status'] == 200 && response['statusText'] === 'OK') {
-            return 1;
-        } else {
-            return 0;
-        }
-    } catch (error) {
-        console.log(`Error at insertEvent --> ${error}`);
-        return 0;
-    }
-};
+//         if (response['status'] == 200 && response['statusText'] === 'OK') {
+//             return 1;
+//         } else {
+//             return 0;
+//         }
+//     } catch (error) {
+//         console.log(`Error at insertEvent --> ${error}`);
+//         return 0;
+//     }
+// };
 
-const getEvents = async (dateTimeStart, dateTimeEnd) => {
+// const getEvents = async (dateTimeStart, dateTimeEnd) => {
 
-    try {
-        let response = await calendar.events.list({
-            auth: auth,
-            calendarId: calendarId,
-            timeMin: dateTimeStart,
-            timeMax: dateTimeEnd,
-            timeZone: 'Asia/Kolkata'
-        });
+//     try {
+//         let response = await calender.events.list({
+//             auth: auth,
+//             calendarId: CalenderID,
+//             timeMin: dateTimeStart,
+//             timeMax: dateTimeEnd,
+//             timeZone: 'Asia/Kolkata'
+//         });
     
-        let items = response['data']['items'];
-        return items;
-    } catch (error) {
-        console.log(`Error at getEvents --> ${error}`);
-        return 0;
-    }
-};
+//         let items = response['data']['items'];
+//         return items;
+//     } catch (error) {
+//         console.log(`Error at getEvents --> ${error}`);
+//         return 0;
+//     }
+// };
 
-const deleteEvent = async (eventId) => {
+// const deleteEvent = async (eventId) => {
 
-    try {
-        let response = await calendar.events.delete({
-            auth: auth,
-            calendarId: calendarId,
-            eventId: eventId
-        });
+//     try {
+//         let response = await calendar.events.delete({
+//             auth: auth,
+//             calendarId: calendarId,
+//             eventId: eventId
+//         });
 
-        if (response.data === '') {
-            return 1;
-        } else {
-            return 0;
-        }
-    } catch (error) {
-        console.log(`Error at deleteEvent --> ${error}`);
-        return 0;
-    }
-};
+//         if (response.data === '') {
+//             return 1;
+//         } else {
+//             return 0;
+//         }
+//     } catch (error) {
+//         console.log(`Error at deleteEvent --> ${error}`);
+//         return 0;
+//     }
+// };
 
-module.exports = {insertEvent, getEvents, deleteEvent};
+// module.exports = {insertEvent, getEvents, deleteEvent};

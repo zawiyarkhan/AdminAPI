@@ -16,9 +16,8 @@ const UserTableSchema= mongoose.Schema({
         type: String,
         enum : ['1','2','3'],
     },
-    profileID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Client'
+    profile: {
+        type: Object
     }
 })
 UserTableSchema.pre('save', async function(next){

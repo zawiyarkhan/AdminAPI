@@ -10,6 +10,9 @@ const router = express.Router();
 router.post('/SignUp', authControllers.SignUp)
 router.post('/login', authControllers.Login);
 router.post('/logout', authControllers.Logout);
+router.post('/updateClient', authControllers.updateClient);
+router.post('/updateLawyer', authControllers.updateLawyer);
+//router.put('/updateInfo', authControllers.UpdatingInfo);
 router.get('/getClients',requireAuth, routeControllers.getClients);
 router.get('/getLawyers',requireAuth, routeControllers.getLawyers);
 router.put('/updateClients',requireAuth, routeControllers.updateClients);
@@ -21,9 +24,9 @@ router.post('/CreateLawyers',requireAuth, routeControllers.CreateLawyers);
 
 
 // Google Calender routes
-router.post('/insertEvent', requireAuth, calendarControllers.insertEvent);
-router.get('/getEvents', requireAuth, calendarControllers.getEvents);
-router.delete('/DeleteEvents', requireAuth, calendarControllers.deleteEvent);
+// router.post('/insertEvent', requireAuth, calendarControllers.insertEvent);
+// router.get('/getEvents', requireAuth, calendarControllers.getEvents);
+// router.delete('/DeleteEvents', requireAuth, calendarControllers.deleteEvent);
 
 
 // Chat routes

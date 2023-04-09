@@ -17,40 +17,37 @@ const LawyerSchema = mongoose.Schema({
 
     name:{
         type: String,
-        required: true
+
     },
 
     contact: {
         type: String,
-        required: true
+
     },
     currentFirm: {
         type: String,
-        required:true,
+
     },
     highestEducationalDegree: {
         type: String,
-        required: true
+
     },
     accredationInstitute: {
         type: String,
-        required: true,
+    
     },
     experience: {
         type: String,
-        required: true,
+    
     },
     currentPosition: {
         type: String,
-        required: true,
     },
     City: {
         type: String,
-        required: true,
     },
     openToTravel: {
         type: Boolean,
-        required: true,
     },
 
 });
