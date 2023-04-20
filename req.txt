@@ -2,8 +2,18 @@
 
 => Chat API
 
+
+
+
 => Lawyers APIS
 
-=> Clients APIS
 
+
+
+=> Clients APIS
+    - search lawyers using location
+    - getting a lawyer full information
+    - comments
+    - send request to the lawyers
+    - look at all the lawyers present
 

@@ -175,9 +175,15 @@ const Login = async (req,res)=>{
     try {
         const { email, password } = req.body;
         const user = await User.login(email, password);
-        console.log(user)
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
+
+        if (user.role == '2'){
+            res.send('Clients Homepage')
+        }
+        if(user.role == '3'){
+            res.send('Lawyers Homepage')
+        }
 
         res.send(token);
     } catch (error) {

@@ -1,7 +1,9 @@
 const express = require('express');
 const authControllers = require('../Controllers/authControllers');
 const routeControllers =require('../Controllers/routeControllers');
+const clientControllers = require('../Controllers/clientsController');
 const requireAuth = require('../Controllers/middleware/authMiddleware');
+const lawyerControllers = require('../Controllers/lawyerController');
 const calendarControllers = require('../Controllers/gCallenderController');
 const router = express.Router();
 
@@ -21,6 +23,10 @@ router.delete('/DeleteClients',requireAuth, routeControllers.DeleteClients);
 router.delete('/DeleteLawyers',requireAuth, routeControllers.DeleteLawyers);
 router.post('/CreateClients',requireAuth, routeControllers.CreateClients);
 router.post('/CreateLawyers',requireAuth, routeControllers.CreateLawyers);
+router.put('/sendRequest', clientControllers.sendRequest);
+router.put('/accept', lawyerControllers.acceptRequest);
+router.put('/reject', lawyerControllers.declineRequest);
+
 
 
 // Google Calender routes
