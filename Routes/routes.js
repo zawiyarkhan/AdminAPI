@@ -8,13 +8,18 @@ const calendarControllers = require('../Controllers/gCallenderController');
 const router = express.Router();
 
 
-// Admin routes
+
+
+// Admin routes //Auth Routes
 router.post('/SignUp', authControllers.SignUp)
 router.post('/login', authControllers.Login);
 router.post('/logout', authControllers.Logout);
-router.post('/updateClient', authControllers.updateClient);
-router.post('/updateLawyer', authControllers.updateLawyer);
-//router.put('/updateInfo', authControllers.UpdatingInfo);
+router.put('/updateClient', authControllers.updateClient);
+router.put('/updateLawyer', authControllers.updateLawyer);
+
+
+
+// CRUD routes
 router.get('/getClients',requireAuth, routeControllers.getClients);
 router.get('/getLawyers',requireAuth, routeControllers.getLawyers);
 router.put('/updateClients',requireAuth, routeControllers.updateClients);
@@ -23,10 +28,14 @@ router.delete('/DeleteClients',requireAuth, routeControllers.DeleteClients);
 router.delete('/DeleteLawyers',requireAuth, routeControllers.DeleteLawyers);
 router.post('/CreateClients',requireAuth, routeControllers.CreateClients);
 router.post('/CreateLawyers',requireAuth, routeControllers.CreateLawyers);
+
+
+// Friend Request routes
 router.put('/sendRequest', clientControllers.sendRequest);
 router.put('/accept', lawyerControllers.acceptRequest);
 router.put('/reject', lawyerControllers.declineRequest);
-
+router.put('/deleteRequest', lawyerControllers.updateDeleteRequest);
+router.put('/acceptRequest', lawyerControllers.updateRequestArray);
 
 
 // Google Calender routes

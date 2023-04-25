@@ -48,7 +48,7 @@ const sendRequest = (req, res) =>{
                 User.findByIdAndUpdate(
                     req.body.id,
                     {
-                        $push: {'profile.requestPending':decodedToken.id}
+                        $push: {'profile.requestPending':{id:decodedToken.id, message:req.body.message}}
                     }
                 )
                 .then(result => {
@@ -61,7 +61,7 @@ const sendRequest = (req, res) =>{
                 User.findByIdAndUpdate(
                     decodedToken.id,
                     {
-                        $push: {'profile.requestPending': req.body.id}
+                        $push: {'profile.requestPending': {id: req.body.id, message: req.body.message}}
                     }
                 )
                 .then(result => {

@@ -20,32 +20,67 @@ const acceptRequest = (req, res) =>{
             }
             else{
 
-                await User.findByIdAndUpdate(
+                User.findByIdAndUpdate(
                     decodedToken.id,
                     {
                         $push: {'profile.requestAccepted': req.body.id}
                     }
                 )
+                .then(result => {
+                    //res.redirect('/acceptRequest')
+                    res.send('request accepted');
+                })
+                User.findByIdAndUpdate(
+                    req.body.id,
+                    {
+                        'profile.requestAccepted' : decodedToken.id
+                    }
+                )
+                .then(result => {
+                    res.send('')
+                })
+                .catch(err =>{
+                    console.log(err);
+                })
 
-                await User.findByIdAndUpdate(
+                
+                
+                // await User.findByIdAndUpdate(
+                //     req.body.id,
+                //     {
+                //         $push:{'profile.requestAccepted': decodedToken.id}
+                //     }
+                // )
+                // await User.findByIdAndUpdate(
+                //     req.body.id,
+                //     {
+                //         $pull:{'profile.requestPending': decodedToken.id}
+                //     }
+                // )
+            }
+        })
+    }
+}
+
+
+const updateRequestArray = (req,res) => {
+    const token = req.cookies.jwt;
+
+    if (token){
+        jwt.verify(token, "Sweater Weather", async(err, decodedToken)=>{
+            if (err) {
+                console.log(err);
+            }
+            else{
+                User.findByIdAndUpdate(
                     decodedToken.id,
                     {
                         $pull: {'profile.requestPending': req.body.id}
                     }
                 )
-                
-                await User.findByIdAndUpdate(
-                    req.body.id,
-                    {
-                        $push:{'profile.requestAccepted': decodedToken.id}
-                    }
-                )
-                await User.findByIdAndUpdate(
-                    req.body.id,
-                    {
-                        $pull:{'profile.requestPending': decodedToken.id}
-                    }
-                )
+                .then(result => {
+                    res.send("request accepted, removing from the request array")
+                })
             }
         })
     }
@@ -66,16 +101,35 @@ const declineRequest = (req, res) => {
                         $pull: {'profile.requestPending': req.body.id}
                     }
                 )
-
-                await User.findByIdAndUpdate(
-                    req.body.id,
-                    {
-                        $pull: {'profile.requestPending': decodedToken.id}
-                    }
-                )
+                .then(result => {
+                    res.send('request deleted');
+                })
             }
         })
     }
 }
 
-module.exports = {acceptRequest, declineRequest};
+const updateDeleteRequest = (req, res) => {
+    const token = req.cookies.jwt;
+
+    if (token) {
+        jwt.verify(token, "Sweater Weather", async(err, decodedToken) => {
+            if (err){
+                console.log(err.message);
+            }
+            else{
+                User.findByIdAndUpdate(
+                    req.body.id,
+                    {
+                        $pull: {'profile.requestPending': decodedToken.id}
+                    }
+                )
+                .then(result=>{
+                    res.send("request Declined, removing from the request array")
+                })
+            }
+        })
+    }
+}
+
+module.exports = {acceptRequest, declineRequest, updateRequestArray, updateDeleteRequest};

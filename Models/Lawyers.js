@@ -49,9 +49,13 @@ const LawyerSchema = mongoose.Schema({
     openToTravel: {
         type: Boolean,
     },
-    requestPending : [{type: mongoose.Schema.Types.ObjectId, ref:"Users"}],
+    requestPending : [{
+        type: Object
+    }],
 
-    requestAccepted : [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}]
+    requestAccepted : [{
+        type: Object
+    }]
 
 
 

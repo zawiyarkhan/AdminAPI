@@ -20,7 +20,6 @@ const ClientSchema = mongoose.Schema({
         type: String,
         
     },
-    requestPending : [{type: mongoose.Schema.Types.ObjectId, ref:"Users"}],
     requestAccepted: {type:mongoose.Schema.Types.ObjectId, ref: 'Users'}
     
 
