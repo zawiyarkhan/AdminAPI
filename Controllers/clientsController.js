@@ -30,6 +30,24 @@ const LawyersByLocation = (req,res) =>{
     })
 }
 
+// Get Lawyers by Location and experience for the survey before the website starts
+
+const LawyersByLocationAndExpertise = (req,res) =>{
+    User.find({
+        $and: [
+            {role: '2'},
+            {City: req.body.City},
+            {currentPosition: req.body.currentPosition}
+        ]
+    })
+    .then(result => {
+        res.send(result);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
 
 // send a request to the lawyers
 
@@ -97,4 +115,4 @@ const sendRequest = (req, res) =>{
 // take the survey for the thing
 
 
-module.exports = {sendRequest};
+module.exports = {sendRequest, LawyersByLocation,LawyersByLocationAndExpertise, allLawyers};

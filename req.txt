@@ -1,19 +1,23 @@
-=> Google Calender API
+=> Google Calender API  (0auth required)
 
-=> Chat API
+
+
+=> Chat API  (requires 30 days trial)
 
 
 
 
 => Lawyers APIS
-
+    - accept and receive request (done)
 
 
 
 => Clients APIS
-    - search lawyers using location
-    - getting a lawyer full information
-    - comments
-    - send request to the lawyers
-    - look at all the lawyers present
+    - search lawyers using location     (done)
+    - getting a lawyer full information (done)
+    - comments                          (done)
+    - send request to the lawyers       (done)
+    - look at all the lawyers present  (done)
+
+
 

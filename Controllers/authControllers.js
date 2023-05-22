@@ -28,14 +28,14 @@ const SignUp = async (req,res) =>{
             const token = createToken(user._id);
             res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
             console.log(token)
-            res.redirect('/updateClient')
+            res.status(201).json({user:user._id})
         }
         if (req.body.role == '3'){
             const user = await User.create({email, password, role})
             const token = createToken(user._id);
             res.cookie('jwt', token, {httpOnly: true, maxAge: maxage * 1000});
             console.log(token);
-            res.redirect('/updateLawyer')
+            res.status(201).json({user:user._id})
         }
 
         // const token = createToken(user._id);
