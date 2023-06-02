@@ -36,7 +36,7 @@ const acceptRequest = (req, res) =>{
                         'profile.requestAccepted' : decodedToken.id
                     }
                 )
-                .then(result => {
+                .then((result) => {
                     res.send('')
                 })
                 .catch(err =>{

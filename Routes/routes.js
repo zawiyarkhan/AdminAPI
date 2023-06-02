@@ -6,7 +6,7 @@ const requireAuth = require('../Controllers/middleware/authMiddleware');
 const lawyerControllers = require('../Controllers/lawyerController');
 const calendarControllers = require('../Controllers/gCallenderController');
 const router = express.Router();
-
+const chatController = require('../Controllers/chatController');
 
 
 
@@ -45,7 +45,7 @@ router.put('/acceptRequest', lawyerControllers.updateRequestArray);
 
 
 // Chat routes
-
+router.post('/authenticate', chatController.authenticate);
 
 
 module.exports =  router;
