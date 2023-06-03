@@ -1,10 +1,10 @@
 const User = require('../Models/Users');
 const jwt = require('jsonwebtoken');
 
-// Get All Clients
+// Get All Lawyers
 
 const allLawyers = async(req, res) => {
-    User.find({role : '2'})
+    User.find({role : '3'})
       .then(result => {
         res.send(result);
       })

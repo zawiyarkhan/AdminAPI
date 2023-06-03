@@ -29,6 +29,15 @@ router.delete('/DeleteLawyers',requireAuth, routeControllers.DeleteLawyers);
 router.post('/CreateClients',requireAuth, routeControllers.CreateClients);
 router.post('/CreateLawyers',requireAuth, routeControllers.CreateLawyers);
 
+// Client Routes
+router.get('/allLawyers', clientControllers.allLawyers);
+router.get('/allLawyers', clientControllers.LawyersByLocation );
+router.get('/allLawyers', clientControllers.LawyersByLocationAndExpertise);
+router.post('/allLawyers', clientControllers.sendRequest);
+
+
+
+
 
 // Friend Request routes
 router.put('/sendRequest', clientControllers.sendRequest);
