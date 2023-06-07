@@ -3,7 +3,7 @@ const User = require('../Models/Users');
 
 //getClients
 const getClients = (req, res) => {
-    User.find()
+    User.find({role:'2'})
       .then(result => {
         res.send(result);
       })
@@ -12,8 +12,18 @@ const getClients = (req, res) => {
       });
   }
 
-//getLawyers
 const getLawyers = (req, res) => {
+  User.find({role:'3'})
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+//getLawyers
+const getAllUsers = (req, res) => {
     User.find()
       .then(result => {
         res.send(result);
@@ -105,4 +115,4 @@ const CreateClients = (req, res) => {
       });
   };
 
-module.exports =  {CreateClients, CreateLawyers, updateClients, updateLawyers, getClients,getLawyers, DeleteLawyers,DeleteClients};
+module.exports =  {getAllUsers, CreateClients, CreateLawyers, updateClients, updateLawyers, getClients,getLawyers, DeleteLawyers,DeleteClients};

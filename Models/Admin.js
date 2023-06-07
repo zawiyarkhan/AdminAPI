@@ -3,31 +3,31 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 
-const userRoleSchema = new mongoose.Schema({
-    // email : {
-    //     type: String,
-    //     required: true,
-    //     unique: true,
-    //     validate:[isEmail]
-    // },
-    // password: {
-    //     type: String,
-    //     required: true,
-    //     minlength: 6,
-    // },
+const adminSchema = new mongoose.Schema({
+    email : {
+        type: String,
+        required: true,
+        unique: true,
+        validate:[isEmail]
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6,
+    },
     name: {
         type: String,
         required: true
     }
 });
 
-userRoleSchema.pre('save', async function(next){
+adminSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
 
-userRoleSchema.statics.console.login =async function(email, password){
+adminSchema.statics.console.login =async function(email, password){
     try {
         const admin = await this.findone({email});
         if(admin){
@@ -41,5 +41,5 @@ userRoleSchema.statics.console.login =async function(email, password){
     }
 }
 
-const UserRoles = mongoose.model('UserRoles', userRoleSchema);
+const UserRoles = mongoose.model('Admin', adminSchema);
 module.exports = UserRoles;

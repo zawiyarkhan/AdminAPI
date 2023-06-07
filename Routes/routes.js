@@ -7,6 +7,9 @@ const lawyerControllers = require('../Controllers/lawyerController');
 const calendarControllers = require('../Controllers/gCallenderController');
 const router = express.Router();
 const chatController = require('../Controllers/chatController');
+const AdminController = require('../Controllers/adminController');
+
+
 
 
 
@@ -20,23 +23,22 @@ router.put('/updateLawyer', authControllers.updateLawyer);
 
 
 // CRUD routes
-router.get('/getClients',requireAuth, routeControllers.getClients);
-router.get('/getLawyers',requireAuth, routeControllers.getLawyers);
-router.put('/updateClients',requireAuth, routeControllers.updateClients);
-router.put('/updateLawyers',requireAuth, routeControllers.updateLawyers);
-router.delete('/DeleteClients',requireAuth, routeControllers.DeleteClients);
-router.delete('/DeleteLawyers',requireAuth, routeControllers.DeleteLawyers);
+router.get('/getClients', routeControllers.getClients);
+router.get('/getLawyers', routeControllers.getLawyers);
+router.get('/getAll', routeControllers.getAllUsers);
+router.put('/updateClients/:id',requireAuth, routeControllers.updateClients);
+router.put('/updateLawyers/:id',requireAuth, routeControllers.updateLawyers);
+router.delete('/Delete/:id', routeControllers.DeleteClients);
 router.post('/CreateClients',requireAuth, routeControllers.CreateClients);
 router.post('/CreateLawyers',requireAuth, routeControllers.CreateLawyers);
 
 // Client Routes
 router.get('/allLawyers', clientControllers.allLawyers);
-router.get('/allLawyers', clientControllers.LawyersByLocation );
+router.get('/LawyerbyLoc', clientControllers.LawyersByLocation );
 router.get('/allLawyers', clientControllers.LawyersByLocationAndExpertise);
-router.post('/allLawyers', clientControllers.sendRequest);
 
 
-
+router.post('/LoginAdmin', AdminController.Login)
 
 
 // Friend Request routes
