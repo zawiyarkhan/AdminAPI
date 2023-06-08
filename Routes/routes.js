@@ -37,9 +37,8 @@ router.get('/allLawyers', clientControllers.allLawyers);
 router.get('/LawyerbyLoc', clientControllers.LawyersByLocation );
 router.get('/allLawyers', clientControllers.LawyersByLocationAndExpertise);
 
-
-router.post('/LoginAdmin', AdminController.Login)
-
+router.post('/LoginAdmin', AdminController.Login);
+router.post('/SignUpAdmin', AdminController.SignUp);
 
 // Friend Request routes
 router.put('/sendRequest', clientControllers.sendRequest);

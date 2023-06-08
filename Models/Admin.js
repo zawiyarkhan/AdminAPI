@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const {isEmail} = require('validator');
 const bcrypt = require('bcrypt');
 
 
@@ -27,12 +27,17 @@ adminSchema.pre('save', async function(next){
     next();
 });
 
-adminSchema.statics.console.login =async function(email, password){
+adminSchema.statics.login =async function(email, password){
+    console.log(email);
+    console.log(password);
     try {
-        const admin = await this.findone({email});
+        const admin = await this.findOne({email: email});
+        console.log("admin: ",admin);
         if(admin){
-            const auth = await bcrypt.compare(password, this.password);
-            if (admin) {
+            console.log("hello there")
+            const auth = await bcrypt.compare(password, admin.password);
+            console.log("auth: ",auth)
+            if (auth) {
                 return admin;
             }
         }
